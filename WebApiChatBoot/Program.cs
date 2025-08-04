@@ -6,19 +6,18 @@ using WebApiChatBoot.Repositorios.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
+// Configuração do Entity Framework e Repositórios
 builder.Services.AddEntityFrameworkSqlServer()
     .AddDbContext<SistemaTarefasDBContex>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
 
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -27,9 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

@@ -26,34 +26,35 @@ namespace WebApiChatBoot.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UsuarioModel>> BuscarPorId(int id)
         {
-            UsuarioModel usuario = await _usuarioRepositorio.BuscarPorId(id);
-            if (usuario == null)
-            {
-                return NotFound($"Usuário com ID: {id} não encontrado.");
-            }
+            var usuario = await _usuarioRepositorio.BuscarPorId(id);
+            if (usuario == null || usuario.Status != "Status Liberado")
+                return NotFound($"Usuário com ID: {id} não encontrado ou não está liberado.");
+
             return Ok(usuario);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<UsuarioModel>> Cadastrar([FromBody] UsuarioModel usuarioModel)
-        {
-            UsuarioModel usuario = await _usuarioRepositorio.Adicionar(usuarioModel);
-            return Ok(usuario);
-        }
+        #region LOCAL PARA DE CRIAÇÃO DE OUTROS METODOS DA API QUE NÃO ESTÃO SENDO USADOS
+        //[HttpPost]
+        //public async Task<ActionResult<UsuarioModel>> Cadastrar([FromBody] UsuarioModel usuarioModel)
+        //{
+        //    UsuarioModel usuario = await _usuarioRepositorio.Adicionar(usuarioModel);
+        //    return Ok(usuario);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<UsuarioModel>> Atualizar([FromBody] UsuarioModel usuarioModel, int id)
-        {
-            usuarioModel.Id = id;
-            UsuarioModel usuario = await _usuarioRepositorio.Atualizar(usuarioModel, id);
-            return Ok(usuario);
-        }
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult<UsuarioModel>> Atualizar([FromBody] UsuarioModel usuarioModel, int id)
+        //{
+        //    usuarioModel.Id = id;
+        //    UsuarioModel usuario = await _usuarioRepositorio.Atualizar(usuarioModel, id);
+        //    return Ok(usuario);
+        //}
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<UsuarioModel>> Apagar(int id)
-        {
-            bool apagado = await _usuarioRepositorio.Apagar(id);
-            return Ok(apagado);
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<UsuarioModel>> Apagar(int id)
+        //{
+        //    bool apagado = await _usuarioRepositorio.Apagar(id);
+        //    return Ok(apagado);
+        //}
+        #endregion
     }
 }
