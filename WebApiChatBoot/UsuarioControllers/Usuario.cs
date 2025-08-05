@@ -24,10 +24,10 @@ namespace WebApiChatBoot.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UsuarioModel>> BuscarPorId(int id)
+        public async Task<ActionResult<UsuarioModel>> BuscarPorId(string id)
         {
             var usuario = await _usuarioRepositorio.BuscarPorId(id);
-            if (usuario == null || usuario.Status != "Status Liberado")
+            if (usuario == null || usuario.ULTIMO_STATUS != "Status Liberado")
                 return NotFound($"Usuário com ID: {id} não encontrado ou não está liberado.");
 
             return Ok(usuario);

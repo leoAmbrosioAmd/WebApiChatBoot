@@ -15,12 +15,14 @@ namespace WebApiChatBoot.Repositorios
 
         public async Task<List<UsuarioModel>> BuscarTodosUsuarios()
         {
-            return await _dbContext.Usuarios
-             .Where(u => u.Status == "Status Liberado")
-             .ToListAsync();
+            return await _dbContext.Usuarios.ToListAsync();
+
+            //return await _dbContext.Usuarios
+            // .Where(u => u.Status == "Status Liberado")
+            // .ToListAsync();
         }
 
-        public async Task<UsuarioModel> BuscarPorId(int id)
+        public async Task<UsuarioModel> BuscarPorId(string id)
         {
             return await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == id);
         }
