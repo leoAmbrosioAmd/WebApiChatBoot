@@ -18,7 +18,7 @@ namespace WebApiChatBoot.Repositorios
             return await _dbContext.Usuarios.ToListAsync();
 
             //return await _dbContext.Usuarios
-            // .Where(u => u.Status == "Status Liberado")
+            // .Where(u => u.Status == "ENTREVISTA PENDENTE")
             // .ToListAsync();
         }
 

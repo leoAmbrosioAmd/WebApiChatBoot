@@ -16,6 +16,8 @@ builder.Services.AddEntityFrameworkSqlServer()
         options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
 
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<ITabelaPrecoRepositorio, TabelaPrecoRepositorio>();
+
 
 var app = builder.Build();
 
