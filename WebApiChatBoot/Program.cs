@@ -1,16 +1,16 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using WebApiChatBoot.Data;
 using WebApiChatBoot.Repositorios;
 using WebApiChatBoot.Repositorios.Interfaces;
+using WebApiChatBoot.Service;
+using WebApiChatBoot.Service.Middlewares;        
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuração do Entity Framework e Repositórios
 builder.Services.AddEntityFrameworkSqlServer()
     .AddDbContext<SistemaTarefasDBContex>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
@@ -18,6 +18,8 @@ builder.Services.AddEntityFrameworkSqlServer()
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<ITabelaPrecoRepositorio, TabelaPrecoRepositorio>();
 
+
+builder.Services.AddSingleton<TokenService>();
 
 var app = builder.Build();
 
@@ -28,6 +30,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// ðŸ‘‡ Middleware de autenticaÃ§Ã£o (ANTES do UseAuthorization)
+app.UseMiddleware<TokenAuthenticationMiddleware>();
+
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
