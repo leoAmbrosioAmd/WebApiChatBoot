@@ -11,7 +11,7 @@ namespace WebApiChatBoot.UsuarioControllers
         private readonly ITabelaPrecoRepositorio _tabelaPrecoRepositorio;
 
         public TabelaPrecoController(ITabelaPrecoRepositorio tabelaPrecoRepositorio)
-        {
+        { 
             _tabelaPrecoRepositorio = tabelaPrecoRepositorio;
         }
 
